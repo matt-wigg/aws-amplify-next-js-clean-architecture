@@ -1,3 +1,5 @@
+# .github/workflows/codeql.yml
+
 name: "CodeQL Advanced"
 
 on:
@@ -33,13 +35,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
+          cache: 'npm'
 
-      - name: Install dependencies and build (manual mode)
-        if: matrix.build-mode == 'manual'
-        shell: bash
-        run: |
-          npm ci
-          npm run build
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Next.js app
+        run: npm run build
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
