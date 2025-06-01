@@ -19,7 +19,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@aws-amplify/backend": "^1.16.0",
+    "@aws-amplify/backend": "^1.16.1",
     "@aws-amplify/backend-cli": "^1.7.2",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4.0.7",
