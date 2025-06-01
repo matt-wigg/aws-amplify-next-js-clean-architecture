@@ -2,7 +2,7 @@
 
 This repository contains a [Next.js application](https://nextjs.org/docs) integrated with [AWS Amplify](https://docs.amplify.aws/), providing a robust backend with server-side rendering (SSR). It is designed as a sandbox environment for rapid prototyping and testing. The project follows the guidelines provided in the [Amplify Next.js App Router with Server Components Guide](https://docs.amplify.aws/nextjs/build-a-backend/server-side-rendering/nextjs-app-router-server-components/) and implements the latest Next.js v15 ([React 19](https://react.dev/blog/2024/12/05/react-19)) features.
 
-![Image](https://github.com/user-attachments/assets/dbaae519-e4e9-42c9-b802-4118b07c0b1d)
+![Image](https://github.com/user-attachments/assets/35b3107d-7873-46c3-b7af-349b4925ddc5)
 
 ## Table of Contents
 
@@ -82,8 +82,6 @@ Before running the application, you need to set up AWS Amplify for local develop
 This project utilizes the [AWS Amplify Authenticator UI component](https://ui.docs.amplify.aws/react/connected-components/authenticator) to manage user authentication seamlessly. The Authenticator provides pre-built, customizable authentication flows, including sign-up, sign-in, and multi-factor authentication, reducing the need for extensive boilerplate code.
 
 ### Customizing the Authenticator
-
-![Image](https://github.com/user-attachments/assets/6157d2a8-fe20-47ca-99fd-1b80dbe5b3e9)
 
 You can [customize the Authenticator component](https://ui.docs.amplify.aws/react/connected-components/authenticator/customization) by providing custom components for the header, footer, and other UI elements.
 
