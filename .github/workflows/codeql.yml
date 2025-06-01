@@ -11,7 +11,7 @@ on:
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
-    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    runs-on: ubuntu-latest
     permissions:
       security-events: write
       packages: read
@@ -23,25 +23,29 @@ jobs:
       matrix:
         include:
           - language: javascript-typescript
-            build-mode: autobuild
+            build-mode: manual
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies and build (manual mode)
+        if: matrix.build-mode == 'manual'
+        shell: bash
+        run: |
+          npm ci
+          npm run build
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
-          # Optional: specify custom queries
-          # queries: +security-extended,security-and-quality
-
-      - if: matrix.build-mode == 'manual'
-        shell: bash
-        run: |
-          echo 'Replace this with your manual build steps'
-          exit 1
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
