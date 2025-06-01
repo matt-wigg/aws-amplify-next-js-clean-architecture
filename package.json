@@ -22,7 +22,7 @@
     "@aws-amplify/backend": "^1.16.1",
     "@aws-amplify/backend-cli": "^1.7.2",
     "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4.0.7",
+    "@tailwindcss/postcss": "^4.1.8",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
