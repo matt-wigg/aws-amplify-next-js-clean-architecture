@@ -398,3 +398,5 @@ Amplify code-first DX (Gen 2) offers fullstack branch deployments that allow you
 | `Amplify CLI Issues` | Update with: `npm install -g @aws-amplify/cli` |
 | `Build Failures` | Ensure Node.js and npm versions match the project requirements. |
 | `Amplify Sandbox Issues` | Check Amplify Sandbox setup and AWS credentials. |
+
+[Back to Top](#aws-amplify-nextjs-clean-architecture)
