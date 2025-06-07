@@ -33,8 +33,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
       >
         <ThemeProvider>
-          <ConfigureAmplifyClientSide />
-          {children}
+          <ConfigureAmplifyClientSide>{children}</ConfigureAmplifyClientSide>
         </ThemeProvider>
       </body>
     </html>

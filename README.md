@@ -151,8 +151,8 @@ You can [customize the Authenticator component](https://ui.docs.amplify.aws/reac
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
+import Image from "next/image";
 import Logo from "@public/logo.webp";
 import { ROUTES } from "@nextjs/constants/routes.constants";
 
@@ -163,22 +163,19 @@ import { ROUTES } from "@nextjs/constants/routes.constants";
 const customComponents = {
   Header() {
     return (
-      <figure className="w-30 h-30 mx-auto border relative overflow-hidden rounded-full mb-8">
+      <figure className="w-30 h-30 mx-auto border border-border relative overflow-hidden rounded-full mb-8">
         <Image
           src={Logo}
           alt="Matt Wigg Logo"
           fill
           sizes="96px"
-          style={{
-            objectFit: "cover",
-          }}
+          style={{ objectFit: "cover" }}
           priority
           quality={85}
         />
       </figure>
     );
   },
-
   Footer() {
     return (
       <p className="text-sm text-center text-muted-foreground mt-4">
@@ -189,32 +186,20 @@ const customComponents = {
 };
 
 /**
- * Handles redirecting the user to the app after successful authentication.
+ * CognitoAuthenticator component.
+ * Renders the Amplify Authenticator with Matt Wigg branding and handles routing after sign in.
  */
-function AuthRedirectHandler() {
-  const router = useRouter();
+export function CognitoAuthenticator() {
   const { authStatus } = useAuthenticator((context) => [context.authStatus]);
+  const router = useRouter();
 
   useEffect(() => {
     if (authStatus === "authenticated") {
       router.replace(ROUTES.INTERNAL.HOME);
     }
-  }, [authStatus, router]);
+  }, [authStatus]);
 
-  return null;
-}
-
-/**
- * CognitoAuthenticator component.
- * Renders the Amplify Authenticator with Matt Wigg branding and handles routing after login.
- */
-export function CognitoAuthenticator() {
-  return (
-    <Authenticator.Provider>
-      <AuthRedirectHandler />
-      <Authenticator components={customComponents} initialState="signIn" />
-    </Authenticator.Provider>
-  );
+  return <Authenticator components={customComponents} initialState="signIn" />;
 }
 
 ```
