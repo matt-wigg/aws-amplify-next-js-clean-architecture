@@ -91,12 +91,14 @@ Use these when you need full control or automation in CI/CD pipelines.
 ##### Start a Sandbox (manually)
 
 ```bash
+cd infrastructure
 npx ampx sandbox --profile <your-profile-name> --identifier <optional-custom-id>
 ```
 
 ##### Delete a Sandbox (manually)
 
 ```bash
+cd infrastructure
 npx ampx sandbox delete --profile <your-profile-name> --identifier <optional-custom-id>
 ```
 
