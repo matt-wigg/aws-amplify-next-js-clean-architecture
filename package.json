@@ -1,5 +1,5 @@
 {
-  "name": "aws-amplify-nextjs-starter-app",
+  "name": "aws-amplify-nextjs-clean-architecture",
   "version": "1.0.0-clean-architecture",
   "private": true,
   "scripts": {
