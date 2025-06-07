@@ -1,6 +1,6 @@
 {
   "name": "aws-amplify-nextjs-clean-architecture",
-  "version": "1.0.0-clean-architecture",
+  "version": "1.1.0-mono-amplify",
   "private": true,
   "scripts": {
     "turbo-dev": "next dev --turbopack",

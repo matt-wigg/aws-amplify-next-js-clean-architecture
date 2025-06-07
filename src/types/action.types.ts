@@ -1,3 +1,1 @@
-export type ActionState =
-  | { error: string; success?: undefined }
-  | { success: true; error?: undefined };
+export type ActionResponse = { success: boolean; error?: string };

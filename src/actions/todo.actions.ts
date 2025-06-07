@@ -2,12 +2,8 @@
 
 import { TodoController } from "@interface-adapters/controllers/todo/todo.controller";
 import { revalidateTodoPaths } from "@nextjs/utils/action.utils";
+import type { ActionResponse } from "@nextjs/types/action.types";
 import type { Todo } from "@domain/models/Todo";
-
-interface ActionResponse {
-  success: boolean;
-  error?: string;
-}
 
 /**
  * Server action: Create a new Todo.

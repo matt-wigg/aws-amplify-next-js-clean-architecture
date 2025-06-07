@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { Amplify } from "aws-amplify";
-import outputs from "@root/amplify_outputs.json";
+import outputs from "@infrastructure/amplify_outputs.json";
 
 /**
  * Configures the Amplify client runtime.

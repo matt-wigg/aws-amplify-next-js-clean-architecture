@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { createServerRunner } from "@aws-amplify/adapter-nextjs";
 import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
-import outputs from "@root/amplify_outputs.json";
+import outputs from "@infrastructure/amplify_outputs.json";
 import type { Schema } from "@infrastructure/amplify/data/resource";
 
 /**

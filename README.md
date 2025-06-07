@@ -49,14 +49,60 @@ Before setting up the project, ensure you have the following installed:
 
 ## AWS Amplify Setup
 
-> [!TIP]  
-> If your AWS environment is already set up, you can skip the configuration step and start the sandbox directly with your profile:
->
-> ```bash
-> npx ampx sandbox --profile <your-profile-name>
-> ```
+> [!IMPORTANT]  
+> Before running the application, you need to set up AWS Amplify for local development. Follow the official AWS documentation for configuring your AWS account and setting up IAM Identity Center - [Configure AWS for Local Development](https://docs.amplify.aws/nextjs/start/account-setup/).
 
-Before running the application, you need to set up AWS Amplify for local development. Follow the official AWS documentation for configuring your AWS account and setting up IAM Identity Center - [Configure AWS for Local Development](https://docs.amplify.aws/nextjs/start/account-setup/).
+### Amplify Sandbox Management
+
+You can manage Amplify sandboxes in two ways:
+
+#### 1. Custom NPM Scripts (reccomended for local dev)
+
+Located in `infrastructure/amplify/scripts/`, these scripts simplify common sandbox operations with interactive prompts.
+
+##### Start a Sandbox (with prompts)
+
+```bash
+cd infrastructure
+npm run amplify
+```
+
+This will:
+
+1. Prompt for your AWS profile (e.g. aws-dev-environment)
+2. Prompt for a sandbox identifier (optional)
+
+##### Delete a Sandbox (with confirmation)
+
+```bash
+cd infrastructure
+npm run amplify:delete
+```
+
+This will:
+
+1. Prompt for the same profile and optional identifier
+2. Ask for confirmation before deleting resources
+
+#### 2. Standard Amplify CLI Commands (Manual)
+
+Use these when you need full control or automation in CI/CD pipelines.
+
+##### Start a Sandbox (manually)
+
+```bash
+npx ampx sandbox --profile <your-profile-name> --identifier <optional-custom-id>
+```
+
+##### Delete a Sandbox (manually)
+
+```bash
+npx ampx sandbox delete --profile <your-profile-name> --identifier <optional-custom-id>
+```
+
+### About Identifiers
+
+By default, the sandbox `--identifier` is set to your system username. If you start a sandbox with a custom identifier, ***you must also delete it using the same identifier***.
 
 ## Local Development
 
@@ -69,7 +115,7 @@ Before running the application, you need to set up AWS Amplify for local develop
    npm run dev
    ```
 
-   or start with [turbopack](https://nextjs.org/docs/app/api-reference/turbopack) - _a faster development server_:
+   or start with [turbopack](https://nextjs.org/docs/app/api-reference/turbopack) - *a faster development server*:
 
    ```bash
    npm run turbo-dev
@@ -78,7 +124,8 @@ Before running the application, you need to set up AWS Amplify for local develop
 2. Start the Amplify Sandbox
 
    ```bash
-   npx ampx sandbox --profile <your-profile-name>
+   cd infrastructure
+   npm run amplify
    ```
 
 3. Access the Application
@@ -240,7 +287,7 @@ import type { ITodoRepository } from "@domain/repositories/todo.interface";
 export const todoRepository: ITodoRepository = {
   async list(): Promise<Todo[]> {
     try {
-      const { data } = await cookiesClient.models.Todo.list();
+      const { data } = await cookiesClient.models.Todo.list({});
       return data ?? [];
     } catch (err) {
       console.error("TodoRepository.list error", err);

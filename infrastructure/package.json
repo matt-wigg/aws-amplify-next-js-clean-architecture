@@ -1,0 +1,14 @@
+{
+  "name": "infrastructure",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "amplify": "node amplify/scripts/run-amplify.cjs",
+    "amplify:delete": "node amplify/scripts/delete-amplify.cjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}

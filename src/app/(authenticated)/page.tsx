@@ -10,12 +10,12 @@ import { TodoList } from "@nextjs/components/todo/todo-list";
  */
 export default async function WelcomePage() {
   const user = await SessionController.getCurrentUser();
-  const userName = SessionPresenter.presentUserLoginId(user);
+  const loginId = SessionPresenter.presentUserLoginId(user);
 
   return (
     <main className="todo-container">
       <h1 className="text-xl font-semibold">
-        Welcome back, <span className="text-accent-foreground">{userName}</span>
+        Welcome back, <span className="text-accent-foreground">{loginId}</span>
       </h1>
       <hr className="border-border my-4" />
       <TodoForm />

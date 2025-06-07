@@ -1,11 +1,7 @@
 "use client";
 
 import { ClientSessionController } from "@interface-adapters/controllers/session/client.session.controller";
-
-interface ActionResponse {
-  success: boolean;
-  error?: string;
-}
+import type { ActionResponse } from "@nextjs/types/action.types";
 
 /**
  * Client action: Sign the user out.

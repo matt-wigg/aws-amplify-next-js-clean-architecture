@@ -13,6 +13,8 @@ export default async function DraggablePage() {
   const todos = await TodoController.getTodos();
   const sortedTodos = TodoPresenter.presentSortedTodos(todos);
 
+  console.log("Username:", user?.username);
+
   return (
     <main className="todo-container">
       <h1 className="text-xl font-semibold">

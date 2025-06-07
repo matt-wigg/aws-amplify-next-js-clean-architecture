@@ -14,7 +14,7 @@ export const todoRepository: ITodoRepository = {
    */
   async list(): Promise<Todo[]> {
     try {
-      const { data } = await cookiesClient.models.Todo.list();
+      const { data } = await cookiesClient.models.Todo.list({});
       return data ?? [];
     } catch (err) {
       console.error("TodoRepository.list error:", err);

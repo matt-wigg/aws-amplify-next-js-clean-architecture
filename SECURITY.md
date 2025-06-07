@@ -4,6 +4,7 @@ We currently provide security updates for the following version of `aws-amplify-
 
 | Version                 | Supported |
 |-------------------------|-----------|
+| v1.1.0-mono-amplify | ✅        |
 | v1.0.0-clean-architecture      | ✅        |
 
 Please keep your installation up to date to ensure you have the latest security patches.

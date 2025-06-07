@@ -8,9 +8,19 @@ export const SessionPresenter = {
    * Extracts and returns a displayable login ID from a session user.
    *
    * @param user - The session user object or undefined.
-   * @returns The user's login ID, or "Unknown User" if not available.
+   * @returns The user's login ID, or "Unknown Login ID" if not available.
    */
   presentUserLoginId(user: SessionUser | undefined): string {
-    return user?.signInDetails?.loginId || "Unknown User";
+    return user?.signInDetails?.loginId || "Unknown Login ID";
+  },
+
+  /**
+   * Extracts and returns a displayable user name from a session user.
+   *
+   * @param user - The session user object or undefined.
+   * @returns The user's name, or "Unknown User" if not available.
+   */
+  presentUserName(user: SessionUser | undefined): string {
+    return user?.username || "Unknown User";
   },
 };
