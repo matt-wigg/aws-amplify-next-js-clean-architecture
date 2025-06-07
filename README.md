@@ -328,9 +328,9 @@ export default async function DraggablePage() {
 
 ### Resources
 
-- 🧠 [The Clean Architecture — Uncle Bob (Blog)](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+- 🧠 [The Clean Architecture - Uncle Bob (Blog)](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 - 📘 [Clean Architecture Book - Robert Martin (Uncle Bob)](https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure/dp/0134494164)
-- 🎥 [Clean Architecture Explained — Jason Taylor](https://www.youtube.com/watch?v=dK4Yb6-LxAk)
+- 🎥 [Clean Architecture Explained - Jason Taylor](https://www.youtube.com/watch?v=dK4Yb6-LxAk)
 
 ## Deployment
 
