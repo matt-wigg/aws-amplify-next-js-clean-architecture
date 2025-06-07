@@ -1,6 +1,6 @@
 # Security Policy
 
-We currently provide security updates for the following version of `aws-amplify-next-js-starter-app`:
+We currently provide security updates for the following version of `aws-amplify-next-js-clean-architecture`:
 
 | Version                 | Supported |
 |-------------------------|-----------|
