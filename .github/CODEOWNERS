@@ -1,0 +1,9 @@
+# All files in the repository
+
+* @matt-wigg
+
+# Example of specific file, type, or directory
+
+README.md @matt-wigg
+*.tsx @matt-wigg
+/src/ @matt-wigg

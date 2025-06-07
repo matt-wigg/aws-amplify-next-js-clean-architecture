@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+:root {
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(0 0% 20%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(0 0% 20%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(0 0% 20%);
+  --primary: hsl(210 100% 31%);
+  --primary-hover: hsl(210 100% 20%);
+  --primary-light: hsl(210 100% 96%);
+  --primary-foreground: hsl(0 0% 100%);
+  --secondary: hsl(200 100% 88%);
+  --secondary-foreground: hsl(210 100% 31%);
+  --muted: hsl(210 40% 96%);
+  --muted-foreground: hsl(0 0% 40%);
+  --accent: hsl(210 100% 96%);
+  --accent-foreground: hsl(0 0% 20%);
+  --destructive: hsl(0 72% 50%);
+  --destructive-foreground: hsl(0 0% 100%);
+  --border: hsl(210 30% 90%);
+  --input: hsl(210 25% 95%);
+  --ring: hsl(210 100% 40%);
+  --ring-offset: hsl(0 0% 100%);
+}
+
+.dark {
+  --background: hsl(0 0% 8%);
+  --foreground: hsl(0 0% 96%);
+  --card: hsl(0 0% 13%);
+  --card-foreground: hsl(0 0% 96%);
+  --popover: hsl(0 0% 13%);
+  --popover-foreground: hsl(0 0% 96%);
+  --primary: hsl(210 100% 20%);
+  --primary-hover: hsl(210 100% 14%);
+  --primary-light: hsl(213 52% 95%);
+  --primary-foreground: hsl(0 0% 100%);
+  --secondary: hsl(0 0% 20%);
+  --secondary-foreground: hsl(0 0% 90%);
+  --muted: hsl(0 0% 25%);
+  --muted-foreground: hsl(0 0% 70%);
+  --accent: hsl(0 0% 18%);
+  --accent-foreground: hsl(0 0% 96%);
+  --destructive: hsl(0, 72%, 50%);
+  --destructive-foreground: hsl(0 0% 100%);
+  --border: hsl(0 0% 30%);
+  --input: hsl(0 0% 16%);
+  --ring: hsl(210 100% 40%);
+  --ring-offset: hsl(0 0% 8%);
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-light: var(--primary-light);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset: var(--ring-offset);
+}
+
+@layer base {
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@utility todo-container {
+  @apply max-w-md min-w-md mx-auto p-4 bg-card text-card-foreground 
+         shadow-lg rounded-sm space-y-4 
+         border border-border 
+         absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
+}
+
+@utility todo-item {
+  @apply w-full p-2 bg-muted text-muted-foreground 
+         rounded-sm border border-border 
+         break-words overflow-hidden;
+}
+
+@utility input-field {
+  @apply w-full p-2 bg-input text-foreground 
+         border border-border rounded-sm 
+         placeholder:text-muted-foreground 
+         focus:outline-none focus:ring-2 focus:ring-ring 
+         focus:ring-offset-2 focus:ring-offset-ring-offset 
+         transition duration-150 ease-in-out disabled:cursor-not-allowed;
+}
+
+@utility primary-button {
+  @apply inline-flex items-center justify-center gap-2
+         min-w-[8rem] h-10 px-4 text-sm
+         bg-primary text-primary-foreground rounded-sm
+         hover:bg-primary-hover hover:cursor-pointer
+         focus:outline-none focus:ring-2 focus:ring-ring
+         focus:ring-offset-2 focus:ring-offset-ring-offset
+         whitespace-nowrap overflow-hidden text-ellipsis
+         transition duration-150 ease-in-out disabled:cursor-not-allowed;
+}
+
+@utility destructive-button {
+  @apply inline-flex items-center justify-center gap-2
+         min-w-[8rem] h-10 px-4 text-sm
+         bg-destructive text-destructive-foreground rounded-sm
+         hover:bg-red-800 hover:cursor-pointer
+         focus:outline-none focus:ring-2 focus:ring-ring
+         focus:ring-offset-2 focus:ring-offset-ring-offset
+         whitespace-nowrap overflow-hidden text-ellipsis
+         transition duration-150 ease-in-out disabled:cursor-not-allowed;
+}

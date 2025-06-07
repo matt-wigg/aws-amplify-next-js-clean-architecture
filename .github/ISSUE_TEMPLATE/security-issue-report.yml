@@ -1,0 +1,107 @@
+name: "Security issue"
+description: "Report a security vulnerability in the application."
+title: "[Security]: "
+labels: ["security"]
+assignees: ["matt-wigg"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🛡️ Security Issue Report
+        Thank you for reporting a security issue. Please fill out the details below. **Do not disclose sensitive information publicly.**
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: "🛠️ Steps to Reproduce"
+      description: "Provide a clear and concise set of steps to reproduce the vulnerability."
+      placeholder: |
+        1. Describe the steps to reproduce...
+        2. 
+        3.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: "✅ Expected Behavior"
+      description: "What should happen if the system is functioning correctly?"
+      placeholder: "The application should prevent unauthorized access..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: "❌ Actual Behavior"
+      description: "What happened instead?"
+      placeholder: "The application allowed access without proper authentication..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: "⚠️ Security Impact"
+      description: "How does this issue affect the security of the application?"
+      placeholder: "This allows unauthorized users to access sensitive data..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-fix
+    attributes:
+      label: "🛠️ Proposed Fix (Optional)"
+      description: "If you have suggestions for a fix, mention them here."
+      placeholder: "Implement proper authentication checks..."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: "🌍 Environment"
+      description: "Select the environment where the issue was observed."
+      options:
+        - Production
+        - Staging
+        - Development
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: "🔢 Application Version"
+      description: "Specify the version of the application where the issue was found."
+      placeholder: "e.g., v1.0.0"
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: "🖥️ Operating System"
+      description: "Specify the OS where the issue was observed."
+      placeholder: "e.g., Windows 11, macOS Monterey"
+    validations:
+      required: false
+
+  - type: input
+    id: browser
+    attributes:
+      label: "🌐 Browser (if applicable)"
+      description: "Provide the browser details if the issue is web-based."
+      placeholder: "e.g., Chrome 99, Firefox 100"
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: "📝 Additional Context"
+      description: "Include any logs, screenshots, or extra notes to help with debugging."
+    validations:
+      required: false
