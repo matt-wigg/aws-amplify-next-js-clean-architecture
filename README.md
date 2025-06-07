@@ -1,4 +1,4 @@
-# AWS Amplify Next.js Starter App
+# AWS Amplify Next.js Clean Architecture
 
 This repository contains a [Next.js application](https://nextjs.org/docs) integrated with [AWS Amplify](https://docs.amplify.aws/), providing a robust backend with server-side rendering (SSR). It is designed as a sandbox environment for rapid prototyping and testing. The project follows the guidelines provided in the [Amplify Next.js App Router with Server Components Guide](https://docs.amplify.aws/nextjs/build-a-backend/server-side-rendering/nextjs-app-router-server-components/) and implements the latest Next.js v15 ([React 19](https://react.dev/blog/2024/12/05/react-19)) features.
 
@@ -37,8 +37,8 @@ Before setting up the project, ensure you have the following installed:
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/matt-wigg/aws-amplify-next-js-starter-app.git
-   cd aws-amplify-next-js-starter-app
+   git clone https://github.com/matt-wigg/aws-amplify-next-js-clean-architecture.git
+   cd aws-amplify-next-js-clean-architecture
    ```
 
 2. **Install Dependencies**
