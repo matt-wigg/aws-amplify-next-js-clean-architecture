@@ -145,7 +145,7 @@ This project utilizes the [AWS Amplify Authenticator UI component](https://ui.do
 You can [customize the Authenticator component](https://ui.docs.amplify.aws/react/connected-components/authenticator/customization) by providing custom components for the header, footer, and other UI elements.
 
 ```jsx
-// @/components/auth/cognito-authenticator
+// @nextjs/components/auth/cognito-authenticator
 
 "use client";
 
