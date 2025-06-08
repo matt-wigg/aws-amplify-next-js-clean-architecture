@@ -1,7 +1,5 @@
 "use client";
 
-"use client";
-
 import { useState, useEffect, useRef, Fragment } from "react";
 import { flushSync } from "react-dom";
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
@@ -101,6 +99,10 @@ export function DraggableTodoList({ initialTodos }: { initialTodos: Todo[] }) {
     setActiveDropTarget({ id, edge });
   };
 
+  const handleDelete = (id: string) => {
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+  };
+
   return (
     <ul className="space-y-4">
       <hr className="my-4 border-border" />
@@ -116,6 +118,7 @@ export function DraggableTodoList({ initialTodos }: { initialTodos: Todo[] }) {
                 <DraggableTodoItem
                   todo={todo}
                   setActiveDropTarget={handleSetActiveDropTarget}
+                  onDelete={handleDelete}
                 />
                 {isActive && edge === "bottom" && <DraggableDropIndicator />}
               </Fragment>

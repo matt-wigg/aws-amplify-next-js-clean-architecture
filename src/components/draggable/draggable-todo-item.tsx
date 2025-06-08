@@ -23,6 +23,7 @@ import type { Todo } from "@domain/models/Todo";
 interface DraggableTodoItemProps {
   todo: Todo;
   setActiveDropTarget: (id: string | null, edge: Edge | null) => void;
+  onDelete: (id: string) => void;
 }
 
 type ElementState =
@@ -37,16 +38,10 @@ const stateStyles: Record<string, string> = {
   "is-dragging": "opacity-40",
 };
 
-/**
- * Client component for rendering a draggable and droppable todo item.
- *
- * @param todo - The todo item to render.
- * @param setActiveDropTarget - Callback to set active drop target for reordering.
- * @returns A draggable list item with delete support.
- */
 export function DraggableTodoItem({
   todo,
   setActiveDropTarget,
+  onDelete,
 }: DraggableTodoItemProps) {
   const elementRef = useRef<HTMLLIElement>(null);
   const [state, setState] = useState<ElementState>(idle);
@@ -56,11 +51,16 @@ export function DraggableTodoItem({
   );
 
   useEffect(() => {
+    if (result?.success) {
+      onDelete(todo.id);
+    }
+  }, [result, onDelete, todo.id]);
+
+  useEffect(() => {
     const element = elementRef.current!;
     invariant(element);
 
     return combine(
-      // Enable dragging this element
       draggable({
         element,
         getInitialData() {
@@ -83,7 +83,6 @@ export function DraggableTodoItem({
         },
       }),
 
-      // Register this element as a drop target for other todos
       dropTargetForElements({
         element,
         canDrop({ source }) {
