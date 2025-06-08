@@ -1,5 +1,7 @@
 "use client";
 
+"use client";
+
 import { useState, useEffect, useRef, Fragment } from "react";
 import { flushSync } from "react-dom";
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
@@ -8,36 +10,55 @@ import {
   extractClosestEdge,
   type Edge,
 } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge";
-import { DraggableTodoItem } from "@nextjs/components/draggable/draggable-todo-item";
-import { DraggableDropIndicator } from "@nextjs/components/draggable/draggable-drop-indicator";
-import { updateTodoAction } from "@nextjs/actions/todo.actions";
+import { DraggableTodoItem } from "./draggable-todo-item";
+import { DraggableDropIndicator } from "./draggable-drop-indicator";
+import { reorderTodosAction } from "@nextjs/actions/todo.actions";
 import type { Todo } from "@domain/models/Todo";
 
+/**
+ * Client component that renders a sortable list of todos.
+ * Handles drag-and-drop reordering and persists the new order to the server.
+ *
+ * @param initialTodos - List of todos to render in their initial order.
+ * @returns A draggable list UI for todos.
+ */
 export function DraggableTodoList({ initialTodos }: { initialTodos: Todo[] }) {
   const [todos, setTodos] = useState<Todo[]>(initialTodos);
   const [activeDropTarget, setActiveDropTarget] = useState<{
     id: string | null;
     edge: Edge | null;
   }>({ id: null, edge: null });
+
   const todosRef = useRef<Todo[]>(todos);
-
-  useEffect(() => {
-    setTodos(initialTodos);
-  }, [initialTodos]);
-
   useEffect(() => {
     todosRef.current = todos;
   }, [todos]);
 
-  const isTodoData = (data: any): data is { todoId: string; type: string } => {
-    return data && data.type === "todo" && typeof data.todoId === "string";
-  };
+  const pendingUpdates = useRef<{ id: string; order: number }[] | null>(null);
+
+  useEffect(() => {
+    const onNativeDragEnd = () => {
+      if (pendingUpdates.current) {
+        reorderTodosAction(pendingUpdates.current);
+        pendingUpdates.current = null;
+      }
+    };
+
+    document.addEventListener("dragend", onNativeDragEnd);
+    return () => {
+      document.removeEventListener("dragend", onNativeDragEnd);
+    };
+  }, []);
+
+  const isTodoData = (data: any): data is { todoId: string; type: string } =>
+    data?.type === "todo" && typeof data.todoId === "string";
 
   useEffect(() => {
     const cleanup = monitorForElements({
       canMonitor({ source }) {
         return isTodoData(source.data);
       },
+
       async onDrop({ location, source }) {
         const target = location.current.dropTargets[0];
         if (!target) return;
@@ -46,34 +67,30 @@ export function DraggableTodoList({ initialTodos }: { initialTodos: Todo[] }) {
         const targetData = target.data;
         if (!isTodoData(sourceData) || !isTodoData(targetData)) return;
 
-        const current = todosRef.current;
-        const srcIndex = current.findIndex((t) => t.id === sourceData.todoId);
-        const tgtIndex = current.findIndex((t) => t.id === targetData.todoId);
-        if (srcIndex < 0 || tgtIndex < 0) return;
+        const list = todosRef.current;
+        const from = list.findIndex((t) => t.id === sourceData.todoId);
+        const to = list.findIndex((t) => t.id === targetData.todoId);
+        if (from < 0 || to < 0) return;
 
-        const closestEdgeOfTarget = extractClosestEdge(targetData);
-
-        const newTodos = reorderWithEdge({
-          list: current,
-          startIndex: srcIndex,
-          indexOfTarget: tgtIndex,
-          closestEdgeOfTarget,
+        const edge = extractClosestEdge(targetData);
+        const newList = reorderWithEdge({
+          list,
+          startIndex: from,
+          indexOfTarget: to,
+          closestEdgeOfTarget: edge,
           axis: "vertical",
         });
 
-        flushSync(() => {
-          setTodos(newTodos);
-        });
+        // Apply UI change immediately for responsiveness
+        flushSync(() => setTodos(newList));
 
-        try {
-          await Promise.all(
-            newTodos.map((todo, index) =>
-              updateTodoAction(todo.id, { order: index })
-            )
-          );
-        } catch (err) {
-          console.error("Failed to persist reordered todos", err);
-        }
+        // Store update payload to be sent once drag completes
+        pendingUpdates.current = newList.map((todo, index) => ({
+          id: todo.id,
+          order: index,
+        }));
+
+        setActiveDropTarget({ id: null, edge: null });
       },
     });
 
@@ -87,25 +104,20 @@ export function DraggableTodoList({ initialTodos }: { initialTodos: Todo[] }) {
   return (
     <ul className="space-y-4">
       <hr className="my-4 border-border" />
-      {todos.length > 0 ? (
+      {todos.length ? (
         <>
           <h2 className="text-lg font-semibold">Your Todos:</h2>
           {todos.map((todo) => {
             const isActive = activeDropTarget.id === todo.id;
-            const closestEdge = activeDropTarget.edge;
-
+            const edge = activeDropTarget.edge;
             return (
               <Fragment key={todo.id}>
-                {isActive && closestEdge === "top" && (
-                  <DraggableDropIndicator />
-                )}
+                {isActive && edge === "top" && <DraggableDropIndicator />}
                 <DraggableTodoItem
                   todo={todo}
                   setActiveDropTarget={handleSetActiveDropTarget}
                 />
-                {isActive && closestEdge === "bottom" && (
-                  <DraggableDropIndicator />
-                )}
+                {isActive && edge === "bottom" && <DraggableDropIndicator />}
               </Fragment>
             );
           })}

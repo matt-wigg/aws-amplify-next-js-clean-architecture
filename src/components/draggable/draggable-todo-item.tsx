@@ -1,6 +1,9 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useActionState } from "react";
+import { createPortal } from "react-dom";
+import invariant from "tiny-invariant";
+import { GripVertical } from "lucide-react";
 import {
   draggable,
   dropTargetForElements,
@@ -13,11 +16,7 @@ import {
   extractClosestEdge,
   type Edge,
 } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge";
-import { createPortal } from "react-dom";
-import { GripVertical } from "lucide-react";
-import invariant from "tiny-invariant";
 import { deleteTodoAction } from "@nextjs/actions/todo.actions";
-import { useActionState } from "react";
 import { LoadingSpinner } from "@nextjs/components/layout/loading-spinner";
 import type { Todo } from "@domain/models/Todo";
 
@@ -33,10 +32,18 @@ type ElementState =
   | { type: "is-dragging-over"; closestEdge: Edge | null };
 
 const idle: ElementState = { type: "idle" };
+
 const stateStyles: Record<string, string> = {
   "is-dragging": "opacity-40",
 };
 
+/**
+ * Client component for rendering a draggable and droppable todo item.
+ *
+ * @param todo - The todo item to render.
+ * @param setActiveDropTarget - Callback to set active drop target for reordering.
+ * @returns A draggable list item with delete support.
+ */
 export function DraggableTodoItem({
   todo,
   setActiveDropTarget,
@@ -53,6 +60,7 @@ export function DraggableTodoItem({
     invariant(element);
 
     return combine(
+      // Enable dragging this element
       draggable({
         element,
         getInitialData() {
@@ -75,39 +83,37 @@ export function DraggableTodoItem({
         },
       }),
 
+      // Register this element as a drop target for other todos
       dropTargetForElements({
         element,
         canDrop({ source }) {
-          if (source.element === element) return false;
-          return source.data.type === "todo";
+          return source.element !== element && source.data.type === "todo";
         },
         getData({ input }) {
-          const data = { type: "todo", todoId: todo.id, content: todo.content };
-          return attachClosestEdge(data, {
-            element,
-            input,
-            allowedEdges: ["top", "bottom"],
-          });
+          return attachClosestEdge(
+            { type: "todo", todoId: todo.id, content: todo.content },
+            { element, input, allowedEdges: ["top", "bottom"] }
+          );
         },
         getIsSticky() {
           return true;
         },
         onDragEnter({ self }) {
-          const closestEdge = extractClosestEdge(self.data);
-          setActiveDropTarget(todo.id, closestEdge);
-          setState({ type: "is-dragging-over", closestEdge });
+          const edge = extractClosestEdge(self.data);
+          setActiveDropTarget(todo.id, edge);
+          setState({ type: "is-dragging-over", closestEdge: edge });
         },
         onDrag({ self }) {
-          const closestEdge = extractClosestEdge(self.data);
-          setActiveDropTarget(todo.id, closestEdge);
+          const edge = extractClosestEdge(self.data);
+          setActiveDropTarget(todo.id, edge);
           setState((current) => {
             if (
               current.type === "is-dragging-over" &&
-              current.closestEdge === closestEdge
+              current.closestEdge === edge
             ) {
               return current;
             }
-            return { type: "is-dragging-over", closestEdge };
+            return { type: "is-dragging-over", closestEdge: edge };
           });
         },
         onDragLeave() {
@@ -127,12 +133,9 @@ export function DraggableTodoItem({
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
           <div
-            className={`
-            todo-item text-sm sm:text-base flex items-center gap-2
-            hover:cursor-grab
-            transition-opacity duration-200
-            ${stateStyles[state.type as keyof typeof stateStyles] || ""}
-          `}
+            className={`todo-item text-sm sm:text-base flex items-center gap-2 hover:cursor-grab transition-opacity duration-200 ${
+              stateStyles[state.type as keyof typeof stateStyles] || ""
+            }`}
           >
             <span className="text-muted-foreground flex-shrink-0 mt-[2px]">
               <GripVertical size={16} />

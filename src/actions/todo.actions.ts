@@ -79,3 +79,27 @@ export async function updateTodoAction(
     return { success: false, error: "Failed to update todo." };
   }
 }
+
+/**
+ * Server action: Bulk update todo orders.
+ *
+ * @param updates - Array of { id, order } pairs.
+ * @returns Result object indicating success or failure.
+ */
+export async function reorderTodosAction(
+  updates: { id: string; order: number }[]
+): Promise<ActionResponse> {
+  if (!updates.length) {
+    return { success: false, error: "No updates provided." };
+  }
+  try {
+    await Promise.all(
+      updates.map(({ id, order }) => TodoController.update(id, { order }))
+    );
+    await revalidateTodoPaths();
+    return { success: true };
+  } catch (err) {
+    console.error("updateTodosOrderAction error:", err);
+    return { success: false, error: "Failed to bulk-update todos." };
+  }
+}
