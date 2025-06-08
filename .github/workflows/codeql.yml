@@ -2,9 +2,11 @@ name: "CodeQL Advanced"
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
   pull_request:
-    branches: ["main"]
+    branches:
+      - main
   schedule:
     - cron: "23 6 * * 5"
 
@@ -42,6 +44,7 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
